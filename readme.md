@@ -2,7 +2,7 @@
 
 Build container.
 ```sh
-docker build -t pytriton-transformer .
+docker build -t pytriton-load-test-example-transforme .
 ```
 
 Start container in interactive mode.
