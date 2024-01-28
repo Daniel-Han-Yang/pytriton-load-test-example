@@ -8,6 +8,7 @@ from sentence_transformers import SentenceTransformer
 from pytriton.decorators import batch
 from pytriton.model_config import ModelConfig, Tensor, DeviceKind
 from pytriton.triton import Triton, TritonConfig
+from pytriton.models.model import Model
 
 logger = logging.getLogger("performance-testing-smallBert")
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(name)s: %(message)s")
@@ -53,6 +54,7 @@ def _get_triton_model_config(self) -> TritonModelConfig:
 
     return self._triton_model_config
 
+Model._get_triton_model_config = _get_triton_model_config
 
 def _infer_function_factory(devices):
     infer_fns = []
