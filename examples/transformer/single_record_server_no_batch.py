@@ -18,13 +18,13 @@ sbertmodel = SentenceTransformer('multi-qa-MiniLM-L6-cos-v1')
 @batch
 def _infer_fn(**inputs: np.ndarray):
     ts = time.time()
-    (sequence_batch,) = inputs.values()
-
-    sequence_batch: np.ndarray = np.char.decode(sequence_batch.astype("bytes"), "utf-8")
-    input_texts = [text for batch in sequence_batch for text in batch]
-    print(f"Decoding  : {int((time.time() - ts) * 1000)}ms")
+    (input_request,) = inputs.values()
+    input_request: np.ndarray = np.char.decode(input_request.astype("bytes"), "utf-8")
+    input_texts = [text for text in input_request]
     ts = time.time()
+    print(input_texts)
     vector = sbertmodel.encode(sentences=input_texts)
+    print(vector)
     print(f"Model runtime  : {int((time.time() - ts) * 1000)}ms")
 
     return [vector]
@@ -42,10 +42,10 @@ with Triton() as triton:
             Tensor(
                 name="response",
                 dtype=np.float32,
-                shape=(-1,),
+                shape=(1, 384),
             ),
         ],
-        config=ModelConfig(batch=False),
+        config=ModelConfig(batching=False),
         strict=True,
     )
     logger.info("Serving inference")
