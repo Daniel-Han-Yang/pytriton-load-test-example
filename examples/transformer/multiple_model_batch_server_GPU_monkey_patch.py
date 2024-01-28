@@ -80,7 +80,7 @@ class _InferFuncWrapper:
         return [vector]
 
 
-with Triton(TritonConfig) as triton:
+with Triton() as triton:
     logger.info("Loading smallBert model.")
     triton.bind(
         model_name="smallBert",

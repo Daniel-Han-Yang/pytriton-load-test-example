@@ -17,5 +17,5 @@ docker run --gpus=1 -it -p8000:8000 -p8001:8001 -p8002:8002 -v $PWD/examples/tra
 
 Run command within the container.
 ```sh
-python3 ./transformer/multiple_model_batch_server_GPU_example.py
+python3 ./transformer/multiple_model_batch_server_GPU_monkey_patch.py
 ```
